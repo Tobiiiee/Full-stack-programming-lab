@@ -1,0 +1,44 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.q-container{
+width:500px;
+padding:20px;
+background-color:skyblue;
+border-radius:50px;
+}
+
+.q-title{
+  display:flex;
+  justify-content:center;
+
+}
+
+.btn-1{
+  background:rgb(40, 147, 197);
+  color: white;
+  width: 100px;
+  border-radius:20px;
+  border: none;
+}
+
+.btn-1:hover{
+  background:rgb(56, 85, 126)
+}
+
+
+.btn-2{
+  background:rgb(204, 70, 70);
+  color: white;
+  width: 100px;
+  border-radius:20px;
+  border: none;
+}
+
+.btn-2:hover{
+  background:rgb(148, 53, 40)
+}
