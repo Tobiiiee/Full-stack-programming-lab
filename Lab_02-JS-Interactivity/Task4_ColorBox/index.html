@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 4 - Color Box Generator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Color Box Generator</h1>
+
+      <div class="inputs">
+        <div class="input-group">
+          <label>Color 1</label>
+          <input type="text" id="color1" placeholder="e.g. red" />
+          <button onclick="addColor('color1')">Add</button>
+        </div>
+        <div class="input-group">
+          <label>Color 2</label>
+          <input type="text" id="color2" placeholder="e.g. #3498db" />
+          <button onclick="addColor('color2')">Add</button>
+        </div>
+        <div class="input-group">
+          <label>Color 3</label>
+          <input type="text" id="color3" placeholder="e.g. green" />
+          <button onclick="addColor('color3')">Add</button>
+        </div>
+      </div>
+
+      <button id="clear-btn" onclick="clearBoxes()">Clear All Boxes</button>
+
+      <div id="box-area"></div>
+
+      <div id="bom-info" class="bom-info"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
