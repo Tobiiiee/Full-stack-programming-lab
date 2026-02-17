@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Task 2 - Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h1>Calculator</h1>
+
+  <label>First Number:</label><br />
+  <input type="number" id="num1" /><br /><br />
+
+  <label>Second Number:</label><br />
+  <input type="number" id="num2" /><br /><br />
+
+  <label>Operation:</label><br />
+  <select id="operation">
+    <option value="add">Addition (+)</option>
+    <option value="subtract">Subtraction (-)</option>
+    <option value="multiply">Multiplication (x)</option>
+    <option value="divide">Division (/)</option>
+  </select><br /><br />
+
+  <button onclick="calculate()">Calculate</button>
+  <button onclick="resetCalculator()">Reset</button>
+
+  <div id="result-box">
+    <p id="result">Result will appear here.</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
