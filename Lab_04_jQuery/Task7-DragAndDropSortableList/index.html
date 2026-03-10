@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag and Drop List Reorder</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      #sortableList {
+        list-style-type: none;
+        padding: 0;
+      }
+      .list-item {
+        padding: 15px;
+        margin: 10px 0;
+        background-color: #f0f0f0;
+        border: 2px solid #ddd;
+        cursor: move;
+        transition: background-color 0.3s;
+      }
+      .list-item:hover {
+        background-color: #e0e0e0;
+      }
+      .list-item.ui-sortable-helper {
+        background-color: #4caf50;
+        color: white;
+        border: 2px solid #45a049;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+      .list-item.ui-sortable-placeholder {
+        background-color: #ffeb3b;
+        border: 2px dashed #333;
+        visibility: visible;
+      }
+      h1 {
+        text-align: center;
+      }
+      p {
+        text-align: center;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Drag and Drop List Reorder</h1>
+    <p>Drag and drop items to reorder them</p>
+
+    <ul id="sortableList">
+      <li class="list-item">Item 1: Introduction to Web Development</li>
+      <li class="list-item">Item 2: HTML and CSS Basics</li>
+      <li class="list-item">Item 3: JavaScript Fundamentals</li>
+      <li class="list-item">Item 4: jQuery Library</li>
+      <li class="list-item">Item 5: Responsive Design</li>
+      <li class="list-item">Item 6: Database Management</li>
+      <li class="list-item">Item 7: Advanced JavaScript</li>
+      <li class="list-item">Item 8: Web APIs and AJAX</li>
+    </ul>
+
+    <script>
+      $(document).ready(function () {
+        $("#sortableList").sortable({
+          placeholder: "ui-sortable-placeholder",
+          start: function (event, ui) {
+            ui.item.addClass("dragging");
+          },
+          stop: function (event, ui) {
+            ui.item.removeClass("dragging");
+          },
+          update: function (event, ui) {
+            const order = [];
+            $("#sortableList .list-item").each(function (index) {
+              order.push($(this).text());
+            });
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      .todo-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin: 5px 0;
+        background-color: #f9f9f9;
+      }
+      .delete-btn {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px 15px;
+        cursor: pointer;
+      }
+      .delete-btn:hover {
+        background-color: darkred;
+      }
+      input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        margin-right: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>To-Do List</h1>
+    <div>
+      <input type="text" id="taskInput" placeholder="Enter a new task" />
+      <button id="addBtn">Add Task</button>
+    </div>
+    <div id="taskList"></div>
+
+    <script>
+      $(document).ready(function () {
+        $("#addBtn").click(function () {
+          const taskText = $("#taskInput").val();
+          if (taskText.trim() !== "") {
+            const taskItem = `
+                        <div class="todo-item">
+                            <span>${taskText}</span>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                    `;
+            $("#taskList").append(taskItem);
+            $("#taskInput").val("");
+          }
+        });
+
+        $("#taskList").on("click", ".delete-btn", function () {
+          $(this).parent().remove();
+        });
+
+        $("#taskInput").keypress(function (e) {
+          if (e.which === 13) {
+            $("#addBtn").click();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

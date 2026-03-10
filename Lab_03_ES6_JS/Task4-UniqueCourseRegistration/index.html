@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unique Course Registration System</title>
+  </head>
+  <body>
+    <h1>Unique Course Registration System</h1>
+    <div id="courseResults"></div>
+
+    <script>
+      const registeredCourses = new Set();
+
+      registeredCourses.add("Web Development");
+      registeredCourses.add("Database Systems");
+      registeredCourses.add("Software Engineering");
+      registeredCourses.add("Data Structures");
+      registeredCourses.add("Web Development");
+      registeredCourses.add("Database Systems");
+
+      let output = `<h3>Total Unique Courses: ${registeredCourses.size}</h3>`;
+      output += "<h3>Registered Courses:</h3><ul>";
+
+      for (const course of registeredCourses) {
+        output += `<li>${course}</li>`;
+      }
+
+      output += "</ul>";
+
+      document.getElementById("courseResults").innerHTML = output;
+    </script>
+  </body>
+</html>

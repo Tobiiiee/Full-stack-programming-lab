@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Data Using JSON</title>
+  </head>
+  <body>
+    <h1>Student Data Using JSON</h1>
+    <div id="studentData"></div>
+
+    <script>
+      const studentsJSON = `[
+            {
+                "id": 1,
+                "name": "Ali Ahmed",
+                "semester": 5,
+                "courses": ["Web Development", "Database Systems", "Software Engineering"]
+            },
+            {
+                "id": 2,
+                "name": "Sara Khan",
+                "semester": 3,
+                "courses": ["Data Structures", "OOP", "Discrete Math"]
+            },
+            {
+                "id": 3,
+                "name": "Hassan Raza",
+                "semester": 7,
+                "courses": ["Machine Learning", "AI", "Computer Vision"]
+            },
+            {
+                "id": 4,
+                "name": "Fatima Malik",
+                "semester": 4,
+                "courses": ["Operating Systems", "Computer Networks", "Web Development"]
+            }
+        ]`;
+
+      const students = JSON.parse(studentsJSON);
+
+      let output = "<h2>Student Records</h2>";
+
+      students.forEach((student) => {
+        output += `
+                <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; background-color: #f9f9f9;">
+                    <h3>Student ID: ${student.id}</h3>
+                    <p><strong>Name:</strong> ${student.name}</p>
+                    <p><strong>Semester:</strong> ${student.semester}</p>
+                    <p><strong>Courses:</strong> ${student.courses.join(", ")}</p>
+                </div>
+            `;
+      });
+
+      document.getElementById("studentData").innerHTML = output;
+    </script>
+  </body>
+</html>

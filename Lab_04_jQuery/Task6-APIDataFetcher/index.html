@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax Data Loader</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      button {
+        padding: 12px 25px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 10px 5px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      #dataContainer {
+        margin-top: 20px;
+      }
+      .post-item {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+        background-color: #f9f9f9;
+      }
+      .post-item h3 {
+        margin-top: 0;
+        color: #333;
+      }
+      .loading {
+        text-align: center;
+        padding: 20px;
+        font-size: 18px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ajax Data Loader</h1>
+    <div>
+      <button id="loadPosts">Load Posts</button>
+      <button id="loadUsers">Load Users</button>
+      <button id="loadMore">Load More Posts</button>
+    </div>
+    <div id="dataContainer"></div>
+
+    <script>
+      $(document).ready(function () {
+        let currentPostPage = 1;
+        const postsPerPage = 5;
+
+        $("#loadPosts").click(function () {
+          currentPostPage = 1;
+          $("#dataContainer").html(
+            '<div class="loading">Loading posts...</div>',
+          );
+
+          $.get("https://jsonplaceholder.typicode.com/posts", function (data) {
+            displayPosts(data.slice(0, postsPerPage));
+          });
+        });
+
+        $("#loadUsers").click(function () {
+          $("#dataContainer").html(
+            '<div class="loading">Loading users...</div>',
+          );
+
+          $.get("https://jsonplaceholder.typicode.com/users", function (data) {
+            let output = "<h2>Users List</h2>";
+
+            for (let i = 0; i < data.length; i++) {
+              output += `
+                            <div class="post-item">
+                                <h3>${data[i].name}</h3>
+                                <p><strong>Email:</strong> ${data[i].email}</p>
+                                <p><strong>Phone:</strong> ${data[i].phone}</p>
+                                <p><strong>Website:</strong> ${data[i].website}</p>
+                            </div>
+                        `;
+            }
+
+            $("#dataContainer").html(output);
+          });
+        });
+
+        $("#loadMore").click(function () {
+          currentPostPage++;
+          $("#dataContainer").append(
+            '<div class="loading">Loading more posts...</div>',
+          );
+
+          $.get("https://jsonplaceholder.typicode.com/posts", function (data) {
+            const start = (currentPostPage - 1) * postsPerPage;
+            const end = start + postsPerPage;
+            const newPosts = data.slice(start, end);
+
+            $(".loading").remove();
+
+            for (let i = 0; i < newPosts.length; i++) {
+              $("#dataContainer").append(`
+                            <div class="post-item">
+                                <h3>Post ${newPosts[i].id}: ${newPosts[i].title}</h3>
+                                <p>${newPosts[i].body}</p>
+                            </div>
+                        `);
+            }
+          });
+        });
+
+        function displayPosts(posts) {
+          let output = "<h2>Posts List</h2>";
+
+          for (let i = 0; i < posts.length; i++) {
+            output += `
+                        <div class="post-item">
+                            <h3>Post ${posts[i].id}: ${posts[i].title}</h3>
+                            <p>${posts[i].body}</p>
+                        </div>
+                    `;
+          }
+
+          $("#dataContainer").html(output);
+        }
+      });
+    </script>
+  </body>
+</html>

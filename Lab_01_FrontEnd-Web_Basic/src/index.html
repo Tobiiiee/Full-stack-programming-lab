@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talyllyn Railway - The World's First Preserved Railway</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+
+        .bg-primary {
+            background-color: #5c1f1f;
+        }
+
+        .bg-secondary {
+            background-color: #8b2f2f;
+        }
+
+        .bg-dark-green {
+            background-color: #2d4a2e;
+        }
+
+        .bg-light-green {
+            background-color: #5a7c3e;
+        }
+
+        .text-gold {
+            color: #d4af37;
+        }
+
+        .text-yellow {
+            color: #f5c842;
+        }
+
+        .btn-primary {
+            background-color: #004a7c;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #003a5f;
+        }
+
+        .btn-secondary {
+            background-color: #8b2f2f;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #6b1f1f;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+        }
+
+        .header-banner {
+            background: linear-gradient(to bottom, #5c1f1f 0%, #8b2f2f 100%);
+        }
+
+        .sidebar {
+            background-color: #2d4a2e;
+        }
+
+        .sidebar-title {
+            background-color: #5c1f1f;
+            color: white;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .calendar-day {
+            padding: 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .calendar-day:hover {
+            background-color: #7cad54;
+        }
+
+        .train-service {
+            background-color: #7cad54;
+        }
+
+        .event-day {
+            background-color: #f5c842;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #004a7c;
+            box-shadow: 0 0 0 2px rgba(0, 74, 124, 0.1);
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        .membership-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .membership-table th {
+            background-color: #e5e5e5;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .membership-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .membership-table .price {
+            background-color: #c41e3a;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            width: 80px;
+        }
+
+        .form-section-header {
+            background-color: #004a7c;
+            color: white;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            margin-top: 1rem;
+        }
+
+        .validation-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .field-wrapper {
+            position: relative;
+        }
+    </style>
+</head>
+<body class="bg-primary">
+    <!-- Header -->
+    <div class="header-banner">
+        <div class="container mx-auto px-4">
+            <!-- Top Bar with Languages -->
+            <div class="flex justify-end items-center py-2 space-x-2">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Crect width='60' height='30' fill='%23DE2910'/%3E%3Crect y='10' width='60' height='10' fill='white'/%3E%3C/svg%3E" alt="Deutsch" class="w-8 h-5 cursor-pointer opacity-60 hover:opacity-100">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Crect width='900' height='600' fill='%230055A4'/%3E%3Crect x='300' width='300' height='600' fill='white'/%3E%3Crect x='600' width='300' height='600' fill='%23EF4135'/%3E%3C/svg%3E" alt="Français" class="w-8 h-5 cursor-pointer opacity-60 hover:opacity-100">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Crect width='900' height='600' fill='%23D52B1E'/%3E%3Crect y='200' width='900' height='200' fill='white'/%3E%3C/svg%3E" alt="Polski" class="w-8 h-5 cursor-pointer opacity-60 hover:opacity-100">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Crect width='900' height='600' fill='%23DE2910'/%3E%3Crect y='200' width='900' height='200' fill='white'/%3E%3Crect y='400' width='900' height='200' fill='%23003DA5'/%3E%3C/svg%3E" alt="Nederlands" class="w-8 h-5 cursor-pointer opacity-60 hover:opacity-100">
+            </div>
+            
+            <!-- Logo and Title -->
+            <div class="text-center py-4">
+                <img src="./logo.png" alt="Talyllyn Railway Logo" class="w-16 h-16 mx-auto mb-2">
+                <h1 class="text-gold text-3xl md:text-4xl font-bold tracking-wider">
+                    RHEILFFORDD <span class="text-yellow">TALYLLYN</span> RAILWAY
+                </h1>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="bg-dark-green">
+                <ul class="flex flex-wrap justify-center items-center text-white text-sm md:text-base">
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">Home</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">About</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">Travel</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">Facilities</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">Other Services</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">Enthusiasts</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">Preservation Society</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">News</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">Gallery</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">Search</li>
+                    <li class="px-4 py-3 hover:bg-light-green cursor-pointer transition">Contact</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+            <!-- Left Sidebar -->
+            <div class="lg:col-span-1 space-y-4">
+                <!-- Map Widget -->
+                <div class="sidebar rounded overflow-hidden">
+                    <div class="sidebar-title">How to Get Here and Interactive Route Map</div>
+                    <div class="p-4 text-white text-sm">
+                        <p class="mb-2">Click for directions</p>
+                        <div class="bg-light-green p-3 rounded">
+                            <p>Tywyn,</p>
+                            <p>Gwynedd,</p>
+                            <p>Wales</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timetable -->
+                <div class="sidebar rounded overflow-hidden">
+                    <div class="sidebar-title">Timetable and Events</div>
+                    <div class="p-4 text-white text-sm">
+                        <p class="mb-3">Click on date to see full information for that day</p>
+                        
+                        <!-- Calendar -->
+                        <div class="bg-white text-gray-800 rounded p-2">
+                            <div class="flex justify-between items-center mb-2">
+                                <button class="text-gray-600 hover:text-gray-800">◄</button>
+                                <h3 class="font-bold">September</h3>
+                                <button class="text-gray-600 hover:text-gray-800">►</button>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1 text-xs">
+                                <div class="text-center font-semibold">S</div>
+                                <div class="text-center font-semibold">M</div>
+                                <div class="text-center font-semibold">T</div>
+                                <div class="text-center font-semibold">W</div>
+                                <div class="text-center font-semibold">T</div>
+                                <div class="text-center font-semibold">F</div>
+                                <div class="text-center font-semibold">S</div>
+                                
+                                <div class="calendar-day train-service">1</div>
+                                <div class="calendar-day train-service">2</div>
+                                <div class="calendar-day train-service">3</div>
+                                <div class="calendar-day train-service">4</div>
+                                <div class="calendar-day train-service">5</div>
+                                <div class="calendar-day train-service">6</div>
+                                <div class="calendar-day train-service">7</div>
+                                <div class="calendar-day train-service">8</div>
+                                <div class="calendar-day train-service">9</div>
+                                <div class="calendar-day train-service">10</div>
+                                <div class="calendar-day train-service">11</div>
+                                <div class="calendar-day train-service">12</div>
+                                <div class="calendar-day train-service">13</div>
+                                <div class="calendar-day train-service">14</div>
+                                <div class="calendar-day train-service">15</div>
+                                <div class="calendar-day train-service">16</div>
+                                <div class="calendar-day train-service">17</div>
+                                <div class="calendar-day event-day">18</div>
+                                <div class="calendar-day train-service">19</div>
+                                <div class="calendar-day train-service">20</div>
+                                <div class="calendar-day train-service">21</div>
+                                <div class="calendar-day train-service">22</div>
+                                <div class="calendar-day train-service">23</div>
+                                <div class="calendar-day event-day">24</div>
+                                <div class="calendar-day event-day">25</div>
+                                <div class="calendar-day train-service">26</div>
+                                <div class="calendar-day train-service">27</div>
+                                <div class="calendar-day train-service">28</div>
+                                <div class="calendar-day train-service">29</div>
+                                <div class="calendar-day event-day">30</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 text-xs">
+                            <p class="mb-1">Click on date for more</p>
+                            <p><span class="inline-block w-3 h-3 bg-green-500 mr-1"></span>Train service</p>
+                            <p><span class="inline-block w-3 h-3 bg-yellow-400 mr-1"></span>Event</p>
+                        </div>
+
+                        <div class="mt-3 space-y-1">
+                            <a href="#" class="block text-blue-300 hover:underline">Full Timetable</a>
+                            <a href="#" class="block text-blue-300 hover:underline">Fares</a>
+                            <a href="#" class="block text-blue-300 hover:underline">Download Timetable</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latest News -->
+                <div class="sidebar rounded overflow-hidden">
+                    <div class="sidebar-title">Latest News</div>
+                    <div class="p-4 text-white text-sm space-y-2">
+                        <a href="#" class="block text-blue-300 hover:underline">2014 September - No 1 Talyllyn's practice run</a>
+                        <a href="#" class="block text-blue-300 hover:underline">2014 September - Outdoor Work Update</a>
+                        <a href="#" class="block text-blue-300 hover:underline">2014 August - No 1 Talyllyn and No 1 Carriage</a>
+                        <a href="#" class="block text-blue-300 hover:underline">2014 August - Duncan Day: Young Members take over and Land Rovers</a>
+                        <a href="#" class="block text-blue-300 hover:underline">2014 August - No 1 Talyllyn Returns Home!</a>
+                        
+                        <div class="pt-2 border-t border-gray-600">
+                            <a href="#" class="block text-blue-300 hover:underline font-semibold">Full news</a>
+                            <a href="#" class="flex items-center text-blue-300 hover:underline mt-2">
+                                <span class="mr-2">📰</span> About RSS Feeds
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="lg:col-span-2">
+                <!-- Hero Section -->
+                <div class="bg-dark-green rounded-lg p-6 text-white text-center mb-4">
+                    <div class="flex justify-center mb-4">
+                        <img src="./logo.png" alt="Logo" class="w-20 h-20">
+                    </div>
+                    <p class="mb-4 leading-relaxed">
+                        The Talyllyn Railway is a historic narrow-gauge steam railway, set in the beautiful Mid-Wales countryside. Running from Tywyn to Abergynolwyn and Nant Gwernol, the line passes the delightful Dolgoch Falls and there are excellent forest walks at Nant Gwernol. Why not come and visit us for a great family day out?
+                    </p>
+                </div>
+
+                <!-- Welcome Image/Video Section -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden mb-4">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%232d4a2e'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23f5c842' font-size='48' font-family='Arial'%3ETywyn, Wales%3C/text%3E%3C/svg%3E" alt="Tywyn, Wales" class="w-full">
+                </div>
+
+                <!-- Yellow Starburst Badges -->
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="bg-yellow-400 rounded-full aspect-square flex items-center justify-center p-8 transform -rotate-12 shadow-lg">
+                        <div class="text-center">
+                            <p class="text-2xl font-black text-red-700">A Great</p>
+                            <p class="text-3xl font-black text-red-700">Family</p>
+                            <p class="text-3xl font-black text-red-700">Day Out!</p>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-400 rounded-full aspect-square flex items-center justify-center p-8 transform rotate-12 shadow-lg">
+                        <div class="text-center">
+                            <p class="text-xl font-black text-red-700">Snowdonia</p>
+                            <p class="text-2xl font-black text-red-700">Awaits!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book Now Button -->
+                <div class="text-center mb-4">
+                    <button class="bg-yellow-400 text-red-700 text-3xl font-black px-12 py-6 rounded-lg transform -rotate-3 hover:rotate-0 transition-transform shadow-lg">
+                        Book<br>Now!
+                    </button>
+                </div>
+
+                <!-- Testimonials -->
+                <div class="bg-gray-100 rounded-lg p-6 italic text-gray-700 text-center">
+                    <p class="mb-4">"Its recent passenger survey of the reminiscence and appearance of staff was rated excellent by 99.9% of visitors."</p>
+                    <p class="text-lg font-semibold mb-2">❝</p>
+                    <p>"We got rid of any way our love and lovely, and just a great day out. Staff were very knowledgeable and friendly and it was a great experience for our young children."</p>
+                    <p class="text-right mt-2 text-sm">- Peter Tradeworld - August 2014</p>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="lg:col-span-1 space-y-4">
+                <!-- Places to Stay -->
+                <div class="sidebar rounded overflow-hidden">
+                    <div class="sidebar-title">Places to Stay</div>
+                    <div class="p-4 text-white text-sm">
+                        <a href="#" class="block text-blue-300 hover:underline">Search & Book Local Accommodation</a>
+                    </div>
+                </div>
+
+                <!-- Next Events -->
+                <div class="sidebar rounded overflow-hidden">
+                    <div class="sidebar-title">Next Events</div>
+                    <div class="p-4 text-white text-sm space-y-2">
+                        <p class="text-xs mb-3">Click on date to see full information for that day</p>
+                        <div>
+                            <p class="font-semibold text-red-300">Victorian Train</p>
+                            <p>Thursday, 18. September 2014</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-red-300">Locomotive No.1 - 150th Birthday</p>
+                            <p>Wednesday, 24. September 2014</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-red-300">Victorian Train</p>
+                            <p>Thursday, 25. September 2014</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-red-300">Halloween Train & Feast</p>
+                            <p>Thursday, 30. October 2014 - Friday, 31. October 2014</p>
+                        </div>
+                        <a href="#" class="block text-blue-300 hover:underline mt-3 font-semibold">Events page</a>
+                    </div>
+                </div>
+
+                <!-- Special Offers -->
+                <div class="sidebar rounded overflow-hidden">
+                    <div class="sidebar-title">Special Offers</div>
+                    <div class="p-4">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='100' fill='%23c41e3a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='24' font-family='Arial' font-weight='bold'%3ESPECIAL%3C/text%3E%3Ctext x='50%25' y='70%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='24' font-family='Arial' font-weight='bold'%3EOFFERS%3C/text%3E%3C/svg%3E" alt="Special Offers" class="w-full rounded">
+                        <div class="mt-2 text-white text-sm space-y-1">
+                            <a href="#" class="block text-blue-300 hover:underline">Lorem Ipsum Dolor</a>
+                            <a href="#" class="block text-blue-300 hover:underline">Consectetur Adipiscing</a>
+                            <a href="#" class="block text-blue-300 hover:underline">Elit Sed Eiusmod</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW! Online Shop -->
+                <div class="sidebar rounded overflow-hidden">
+                    <div class="sidebar-title">NEW! Online Shop</div>
+                    <div class="p-4 text-white text-sm">
+                        <a href="#" class="block text-blue-300 hover:underline">Visit the new online shop</a>
+                    </div>
+                </div>
+
+                <!-- Things to do -->
+                <div class="sidebar rounded overflow-hidden">
+                    <div class="sidebar-title">Things to do</div>
+                    <div class="p-4 text-white text-sm space-y-1">
+                        <a href="#" class="block text-blue-300 hover:underline">Duncan Days</a>
+                        <a href="#" class="block text-blue-300 hover:underline">Refreshments</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Membership Modal -->
+    <div id="membershipModal" class="modal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="bg-white border-b-4 border-red-700 p-4">
+                <span class="close float-right text-3xl leading-none cursor-pointer">&times;</span>
+                <div class="flex justify-center mb-4">
+                    <img src="./logo.png" alt="Logo" class="w-24 h-24">
+                </div>
+                <div class="h-2 bg-red-700 mb-4"></div>
+                <h2 class="text-2xl font-bold text-center mb-4">Talyllyn railway Preservation Society Membership application and renewal</h2>
+                <p class="text-sm text-gray-600 mb-2">
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                </p>
+            </div>
+
+            <!-- Membership Classes -->
+            <div class="p-6">
+                <h3 class="text-xl font-bold mb-4">Talyllyn Railway Membership Classes 2015</h3>
+                
+                <table class="membership-table mb-6">
+                    <tbody>
+                        <tr>
+                            <td>Ordinary Member</td>
+                            <td class="price">£25</td>
+                        </tr>
+                        <tr>
+                            <td>Senior (over 65)</td>
+                            <td class="price">£20</td>
+                        </tr>
+                        <tr>
+                            <td>Junior (under 21)</td>
+                            <td class="price">£15</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Associate</strong><br>
+                                <span class="text-sm text-gray-600">(spouse, partner or primary carer of a Life, Senior Life, Ordinary or Senior)</span>
+                            </td>
+                            <td class="price">£10</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Associate Junior (under 21)</strong><br>
+                                <span class="text-sm text-gray-600">(child of a Life, Senior Life, Ordinary or Senior)</span>
+                            </td>
+                            <td class="price">£5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Life Member</strong></td>
+                            <td class="price">£500</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Associate Life</strong><br>
+                                <span class="text-sm text-gray-600">(spouse or partner of Life or Senior Life)</span>
+                            </td>
+                            <td class="price">£250</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Senior Life (over 65)</strong></td>
+                            <td class="price">£200</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Associate Senior Life (over 65)</strong><br>
+                                <span class="text-sm text-gray-600">(spouse or partner of Life or Senior Life)</span>
+                            </td>
+                            <td class="price">£400</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-lg font-bold mb-2">Apply On-line</h3>
+                <p class="text-sm text-gray-600 mb-4">
+                    Please enter membership for each person in the family then 'Add to cart' using the button below, you must then checkout to complete the purchase.
+                </p>
+
+                <div class="mb-4">
+                    <label class="flex items-center text-sm">
+                        <input type="checkbox" class="mr-2" id="renewalCheck">
+                        <span class="text-red-600 font-semibold">Please tick the box if this is a renewal of membership</span>
+                    </label>
+                </div>
+
+                <!-- Member Entry Table -->
+                <div class="overflow-x-auto mb-4">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-blue-900 text-white text-sm">
+                                <th class="p-2 border">Title</th>
+                                <th class="p-2 border">Initials</th>
+                                <th class="p-2 border">Forename</th>
+                                <th class="p-2 border">Surname</th>
+                                <th class="p-2 border">Date of Birth</th>
+                                <th class="p-2 border">Membership Class</th>
+                                <th class="p-2 border">Membership Code</th>
+                                <th class="p-2 border">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="memberTableBody">
+                            <tr>
+                                <td class="p-2 border">
+                                    <select class="w-full text-sm">
+                                        <option>Mr</option>
+                                        <option>Mrs</option>
+                                        <option>Miss</option>
+                                        <option>Ms</option>
+                                        <option>Dr</option>
+                                    </select>
+                                </td>
+                                <td class="p-2 border"><input type="text" class="w-full text-sm"></td>
+                                <td class="p-2 border"><input type="text" class="w-full text-sm"></td>
+                                <td class="p-2 border"><input type="text" class="w-full text-sm"></td>
+                                <td class="p-2 border"><input type="text" placeholder="DD/MM/YYYY" class="w-full text-sm"></td>
+                                <td class="p-2 border">
+                                    <select class="w-full text-sm">
+                                        <option>Ordinary Member</option>
+                                        <option>Senior (over 65)</option>
+                                        <option>Junior (under 21)</option>
+                                        <option>Associate</option>
+                                        <option>Associate Junior</option>
+                                        <option>Life Member</option>
+                                        <option>Associate Life</option>
+                                        <option>Senior Life</option>
+                                        <option>Associate Senior Life</option>
+                                    </select>
+                                </td>
+                                <td class="p-2 border"><input type="text" class="w-full text-sm"></td>
+                                <td class="p-2 border"><input type="text" class="w-full text-sm"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button class="btn-primary mb-6" onclick="addMemberRow()">+ Add Another Member</button>
+
+                <div class="mb-4 text-sm">
+                    <p class="mb-2"><strong>Donation</strong> (See note below) £<input type="number" class="inline-block w-32 ml-2" value="0"></p>
+                    <p class="text-right text-lg font-bold">TOTAL AMOUNT £<span id="totalAmount">0</span></p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="flex items-start text-sm">
+                        <input type="checkbox" class="mr-2 mt-1">
+                        <span>Gift aid my donation</span>
+                    </label>
+                </div>
+
+                <!-- Note re Donations -->
+                <div class="bg-gray-100 p-4 mb-4 text-sm">
+                    <h4 class="font-bold mb-2">Note re Donations</h4>
+                    <p>
+                        Donations by Taxpayers to Talyllyn Holdings Ltd, under Gift Aid enable TRLL to recover tax. If you want your donation to be transferred to THL please stop below. By signing you confirm that you have paid or will pay an amount of income tax and/or Capital gains Tax for each tax year (6 April to 5 April) that is at least equal to the amount of tax that all the Charities or Community Amateur Sports Clubs (CASCs) that you donate to will reclaim on your gifts for that tax year. (Other taxes such as VAT and Council Tax do not qualify) The owner of the credit/debit card being used to pay must be the person making the donation.
+                    </p>
+                </div>
+
+                <p class="text-sm mb-4">Note Subscription cannot be gift aided.</p>
+
+                <button class="btn-primary w-full py-3 text-lg" onclick="openDirectDebitModal()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Direct Debit Modal -->
+    <div id="directDebitModal" class="modal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="bg-white border-b-4 border-red-700 p-4">
+                <span class="close float-right text-3xl leading-none cursor-pointer" onclick="closeDirectDebitModal()">&times;</span>
+                <div class="flex justify-center mb-4">
+                    <img src="./logo.png" alt="Logo" class="w-24 h-24">
+                </div>
+                <div class="h-2 bg-red-700 mb-4"></div>
+                <h2 class="text-2xl font-bold text-center mb-2">Set up Direct Debit for membership renewal</h2>
+                <p class="text-sm text-gray-600 text-center">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                </p>
+            </div>
+
+            <!-- Form Content -->
+            <div class="p-6">
+                <!-- Your Basic Info -->
+                <div class="form-section-header">Your Basic Info</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 required">Title</label>
+                        <div class="field-wrapper">
+                            <input type="text" class="pr-8">
+                            <span class="validation-icon text-green-500 text-xl">✓</span>
+                        </div>
+                    </div>
+                    <div></div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 required">First name(s)</label>
+                        <input type="text">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 required">Last name</label>
+                        <input type="text">
+                    </div>
+                </div>
+
+                <!-- Your contact details -->
+                <div class="form-section-header">Your contact details</div>
+                <div class="p-4 text-sm">
+                    <p class="mb-4">Please provide your telephone number (including area code) and your email address.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 required">Contact number</label>
+                            <input type="tel">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Alternative contact number</label>
+                            <input type="tel">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 required">Email address</label>
+                            <input type="email">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 required">Confirm email address</label>
+                            <input type="email">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Your account address -->
+                <div class="form-section-header">Your account address</div>
+                <div class="p-4 text-sm">
+                    <p class="mb-4">Please provide your Bank Account address.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 required">Postcode</label>
+                            <div class="flex gap-2">
+                                <input type="text" class="flex-1">
+                                <button class="btn-primary">Find</button>
+                            </div>
+                        </div>
+                        <div></div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold mb-1 required">Address line 1</label>
+                            <input type="text">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold mb-1">Address line 2</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 required">Town</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">County</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Your bank details -->
+                <div class="form-section-header">Your bank details</div>
+                <div class="p-4 text-sm">
+                    <p class="mb-4">This is the bank account from where the Direct Debit payments will be taken.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold mb-1 required">Account holder name</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 required">Sort code</label>
+                            <div class="flex gap-2">
+                                <input type="text" maxlength="2" class="w-16 text-center">
+                                <input type="text" maxlength="2" class="w-16 text-center">
+                                <input type="text" maxlength="2" class="w-16 text-center">
+                            </div>
+                        </div>
+                        <div></div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold mb-1 required">Account number</label>
+                            <input type="text" class="w-full md:w-64">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-6">
+                    <button class="btn-primary px-8 py-3 text-lg" onclick="openConfirmationModal()">Check Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="bg-white border-b-4 border-red-700 p-4">
+                <span class="close float-right text-3xl leading-none cursor-pointer" onclick="closeConfirmationModal()">&times;</span>
+                <div class="flex justify-center mb-4">
+                    <img src="./logo.png" alt="Logo" class="w-24 h-24">
+                </div>
+                <div class="h-2 bg-red-700"></div>
+            </div>
+            <div class="p-12 text-center">
+                <p class="text-lg leading-relaxed">
+                    Thank you for setting up a direct debit instruction. We will contact you within ten working days to confirm that your Direct Debit instruction has been successfully completed.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-gray-900 text-white mt-12 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="font-bold mb-2">Follow us on</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-blue-400 hover:text-blue-300">Facebook</a>
+                        <a href="#" class="text-blue-400 hover:text-blue-300">Twitter</a>
+                        <a href="#" class="text-red-400 hover:text-red-300">YouTube</a>
+                    </div>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="font-bold mb-1">Booking Office: 01654 710472</p>
+                    <p class="text-sm text-gray-400">© Talyllyn Railway and contributors | Site Map | Links | Acknowledgements</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal controls
+        const membershipModal = document.getElementById('membershipModal');
+        const directDebitModal = document.getElementById('directDebitModal');
+        const confirmationModal = document.getElementById('confirmationModal');
+
+        // Open membership modal on page load (simulating the sign up button)
+        window.onload = function() {
+            setTimeout(() => {
+                membershipModal.classList.add('active');
+            }, 1000);
+        };
+
+        // Close modals
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.onclick = function() {
+                membershipModal.classList.remove('active');
+                directDebitModal.classList.remove('active');
+                confirmationModal.classList.remove('active');
+            };
+        });
+
+        window.onclick = function(event) {
+            if (event.target === membershipModal) {
+                membershipModal.classList.remove('active');
+            }
+            if (event.target === directDebitModal) {
+                directDebitModal.classList.remove('active');
+            }
+            if (event.target === confirmationModal) {
+                confirmationModal.classList.remove('active');
+            }
+        };
+
+        function openDirectDebitModal() {
+            membershipModal.classList.remove('active');
+            directDebitModal.classList.add('active');
+        }
+
+        function closeDirectDebitModal() {
+            directDebitModal.classList.remove('active');
+        }
+
+        function openConfirmationModal() {
+            directDebitModal.classList.remove('active');
+            confirmationModal.classList.add('active');
+        }
+
+        function closeConfirmationModal() {
+            confirmationModal.classList.remove('active');
+        }
+
+        function addMemberRow() {
+            const tableBody = document.getElementById('memberTableBody');
+            const newRow = tableBody.rows[0].cloneNode(true);
+            // Clear input values
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tableBody.appendChild(newRow);
+        }
+
+        // Calculate total amount
+        function updateTotal() {
+            // This would calculate based on selected membership classes
+            document.getElementById('totalAmount').textContent = '0';
+        }
+    </script>
+</body>
+</html>

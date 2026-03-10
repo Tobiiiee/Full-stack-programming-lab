@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini University Portal</title>
+  </head>
+  <body>
+    <h1>Mini University Portal</h1>
+    <button onclick="saveData()">Save Student Data</button>
+    <div id="portalResults"></div>
+
+    <script>
+      class Student {
+        constructor(id, name, semester, courses) {
+          this.id = id;
+          this.name = name;
+          this.semester = semester;
+          this.courses = courses;
+        }
+      }
+
+      const studentMap = new Map();
+      const registeredCourses = new Set();
+
+      const student1 = new Student(101, "Ali Ahmed", 5, [
+        "Web Development",
+        "Database",
+      ]);
+      const student2 = new Student(102, "Sara Khan", 3, [
+        "Data Structures",
+        "OOP",
+      ]);
+      const student3 = new Student(103, "Hassan Raza", 7, [
+        "Machine Learning",
+        "AI",
+      ]);
+
+      studentMap.set(101, student1);
+      studentMap.set(102, student2);
+      studentMap.set(103, student3);
+
+      studentMap.forEach((student) => {
+        student.courses.forEach((course) => {
+          registeredCourses.add(course);
+        });
+      });
+
+      function displayStudents() {
+        let output = `<h3>Total Students: ${studentMap.size}</h3>`;
+        output += `<h3>Total Unique Courses: ${registeredCourses.size}</h3>`;
+        output += "<h3>Registered Courses:</h3><ul>";
+
+        for (const course of registeredCourses) {
+          output += `<li>${course}</li>`;
+        }
+
+        output += "</ul><h3>Student Details:</h3>";
+
+        studentMap.forEach((student) => {
+          output += `
+                    <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0;">
+                        <p><strong>ID:</strong> ${student.id}</p>
+                        <p><strong>Name:</strong> ${student.name}</p>
+                        <p><strong>Semester:</strong> ${student.semester}</p>
+                        <p><strong>Courses:</strong> ${student.courses.join(", ")}</p>
+                    </div>
+                `;
+        });
+
+        document.getElementById("portalResults").innerHTML = output;
+      }
+
+      function saveData() {
+        const savePromise = new Promise((resolve, reject) => {
+          document.getElementById("portalResults").innerHTML =
+            "<p>Saving data...</p>";
+
+          setTimeout(() => {
+            const success = true;
+            if (success) {
+              resolve("Data saved successfully!");
+            } else {
+              reject("Failed to save data");
+            }
+          }, 2000);
+        });
+
+        savePromise
+          .then((message) => {
+            alert(message);
+            displayStudents();
+          })
+          .catch((error) => {
+            alert(`Error: ${error}`);
+          });
+      }
+
+      displayStudents();
+    </script>
+  </body>
+</html>

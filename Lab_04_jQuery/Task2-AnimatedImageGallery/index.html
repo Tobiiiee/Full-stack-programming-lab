@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Gallery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 50px auto;
+        text-align: center;
+      }
+      #gallery {
+        width: 600px;
+        height: 400px;
+        margin: 20px auto;
+        border: 2px solid #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f0f0f0;
+      }
+      #gallery img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      .controls {
+        margin: 20px;
+      }
+      button {
+        padding: 10px 30px;
+        margin: 0 10px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      #caption {
+        font-size: 20px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Image Gallery</h1>
+    <div id="gallery">
+      <img
+        id="galleryImage"
+        src="https://via.placeholder.com/600x400/FF6347/FFFFFF?text=Image+1"
+        alt="Gallery Image"
+      />
+    </div>
+    <div id="caption">Image 1</div>
+    <div class="controls">
+      <button id="prevBtn">Previous</button>
+      <button id="nextBtn">Next</button>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        const images = [
+          {
+            src: "https://via.placeholder.com/600x400/FF6347/FFFFFF?text=Image+1",
+            caption: "Image 1",
+          },
+          {
+            src: "https://via.placeholder.com/600x400/4169E1/FFFFFF?text=Image+2",
+            caption: "Image 2",
+          },
+          {
+            src: "https://via.placeholder.com/600x400/32CD32/FFFFFF?text=Image+3",
+            caption: "Image 3",
+          },
+          {
+            src: "https://via.placeholder.com/600x400/FFD700/FFFFFF?text=Image+4",
+            caption: "Image 4",
+          },
+          {
+            src: "https://via.placeholder.com/600x400/FF1493/FFFFFF?text=Image+5",
+            caption: "Image 5",
+          },
+        ];
+
+        let currentIndex = 0;
+
+        function showImage(index) {
+          $("#galleryImage").fadeOut(300, function () {
+            $("#galleryImage").attr("src", images[index].src);
+            $("#caption").text(images[index].caption);
+            $("#galleryImage").fadeIn(300);
+          });
+        }
+
+        $("#nextBtn").click(function () {
+          currentIndex = (currentIndex + 1) % images.length;
+          showImage(currentIndex);
+        });
+
+        $("#prevBtn").click(function () {
+          currentIndex = (currentIndex - 1 + images.length) % images.length;
+          showImage(currentIndex);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Style Editor</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      #textBlock {
+        padding: 20px;
+        border: 2px solid #333;
+        min-height: 150px;
+        background-color: white;
+        color: black;
+        font-size: 16px;
+      }
+      .controls {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        font-size: 14px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Text Style Editor</h1>
+    <div id="textBlock">
+      This is a sample text block. Use the buttons below to change the font
+      size, color, background, and add bold or italic styles using jQuery
+      chaining.
+    </div>
+
+    <div class="controls">
+      <button id="increaseFont">Increase Font Size</button>
+      <button id="decreaseFont">Decrease Font Size</button>
+      <button id="redText">Red Text</button>
+      <button id="blueText">Blue Text</button>
+      <button id="greenText">Green Text</button>
+      <button id="yellowBg">Yellow Background</button>
+      <button id="purpleBg">Purple Background</button>
+      <button id="grayBg">Gray Background</button>
+      <button id="boldText">Toggle Bold</button>
+      <button id="italicText">Toggle Italic</button>
+      <button id="resetStyles">Reset All Styles</button>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        let currentSize = 16;
+        let isBold = false;
+        let isItalic = false;
+
+        $("#increaseFont").click(function () {
+          currentSize += 2;
+          $("#textBlock")
+            .css("font-size", currentSize + "px")
+            .fadeOut(100)
+            .fadeIn(100);
+        });
+
+        $("#decreaseFont").click(function () {
+          if (currentSize > 10) {
+            currentSize -= 2;
+            $("#textBlock")
+              .css("font-size", currentSize + "px")
+              .fadeOut(100)
+              .fadeIn(100);
+          }
+        });
+
+        $("#redText").click(function () {
+          $("#textBlock").css("color", "red").fadeOut(100).fadeIn(100);
+        });
+
+        $("#blueText").click(function () {
+          $("#textBlock").css("color", "blue").fadeOut(100).fadeIn(100);
+        });
+
+        $("#greenText").click(function () {
+          $("#textBlock").css("color", "green").fadeOut(100).fadeIn(100);
+        });
+
+        $("#yellowBg").click(function () {
+          $("#textBlock")
+            .css("background-color", "yellow")
+            .fadeOut(100)
+            .fadeIn(100);
+        });
+
+        $("#purpleBg").click(function () {
+          $("#textBlock")
+            .css({
+              "background-color": "purple",
+              color: "white",
+            })
+            .fadeOut(100)
+            .fadeIn(100);
+        });
+
+        $("#grayBg").click(function () {
+          $("#textBlock")
+            .css("background-color", "#f0f0f0")
+            .fadeOut(100)
+            .fadeIn(100);
+        });
+
+        $("#boldText").click(function () {
+          isBold = !isBold;
+          $("#textBlock")
+            .css("font-weight", isBold ? "bold" : "normal")
+            .fadeOut(100)
+            .fadeIn(100);
+        });
+
+        $("#italicText").click(function () {
+          isItalic = !isItalic;
+          $("#textBlock")
+            .css("font-style", isItalic ? "italic" : "normal")
+            .fadeOut(100)
+            .fadeIn(100);
+        });
+
+        $("#resetStyles").click(function () {
+          currentSize = 16;
+          isBold = false;
+          isItalic = false;
+          $("#textBlock")
+            .css({
+              "font-size": "16px",
+              color: "black",
+              "background-color": "white",
+              "font-weight": "normal",
+              "font-style": "normal",
+            })
+            .fadeOut(200)
+            .fadeIn(200);
+        });
+      });
+    </script>
+  </body>
+</html>

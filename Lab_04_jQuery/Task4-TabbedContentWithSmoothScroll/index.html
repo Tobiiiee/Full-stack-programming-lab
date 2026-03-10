@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tab Navigation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      .tabs {
+        display: flex;
+        background-color: #333;
+        margin-bottom: 20px;
+      }
+      .tab-button {
+        flex: 1;
+        padding: 15px;
+        background-color: #555;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      .tab-button:hover {
+        background-color: #777;
+      }
+      .tab-button.active {
+        background-color: #4caf50;
+      }
+      .tab-content {
+        display: none;
+        padding: 30px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        min-height: 200px;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      h2 {
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tab Navigation System</h1>
+
+    <div class="tabs">
+      <button class="tab-button active" data-tab="tab1">Home</button>
+      <button class="tab-button" data-tab="tab2">About</button>
+      <button class="tab-button" data-tab="tab3">Services</button>
+      <button class="tab-button" data-tab="tab4">Portfolio</button>
+      <button class="tab-button" data-tab="tab5">Contact</button>
+    </div>
+
+    <div id="tab1" class="tab-content active">
+      <h2>Home</h2>
+      <p>
+        Welcome to our website! This is the home page where you can find the
+        latest updates and information about our services. We are dedicated to
+        providing the best solutions for our clients.
+      </p>
+    </div>
+
+    <div id="tab2" class="tab-content">
+      <h2>About Us</h2>
+      <p>
+        We are a team of professionals dedicated to excellence. Our company has
+        been serving clients for over 10 years, providing top-quality services
+        and innovative solutions.
+      </p>
+    </div>
+
+    <div id="tab3" class="tab-content">
+      <h2>Our Services</h2>
+      <p>
+        We offer a wide range of services including web development, mobile app
+        development, digital marketing, and IT consulting. Our team is ready to
+        help you achieve your goals.
+      </p>
+    </div>
+
+    <div id="tab4" class="tab-content">
+      <h2>Portfolio</h2>
+      <p>
+        Check out our impressive portfolio of completed projects. We have worked
+        with numerous clients across various industries, delivering exceptional
+        results every time.
+      </p>
+    </div>
+
+    <div id="tab5" class="tab-content">
+      <h2>Contact Us</h2>
+      <p>
+        Get in touch with us today! Email: info@example.com | Phone:
+        +123-456-7890 | Address: 123 Business Street, City, Country
+      </p>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        $(".tab-button").click(function () {
+          const targetTab = $(this).data("tab");
+
+          $(".tab-button").removeClass("active");
+          $(this).addClass("active");
+
+          $(".tab-content").removeClass("active").hide();
+          $("#" + targetTab)
+            .addClass("active")
+            .fadeIn(400);
+
+          $("html, body").animate(
+            {
+              scrollTop: $("#" + targetTab).offset().top - 100,
+            },
+            600,
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Validation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      .form-group {
+        margin: 15px 0;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+      .error {
+        border: 2px solid red;
+        background-color: #ffe6e6;
+      }
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .success-message {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 15px;
+        margin-top: 20px;
+        border: 1px solid #c3e6cb;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Form Validation</h1>
+    <form id="validationForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" />
+        <div class="error-message" id="nameError">Name is required</div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" />
+        <div class="error-message" id="emailError">Valid email is required</div>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" />
+        <div class="error-message" id="phoneError">
+          Valid phone number is required
+        </div>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="success-message" id="successMessage">
+      Form submitted successfully!
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        function validateEmail(email) {
+          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return regex.test(email);
+        }
+
+        function validatePhone(phone) {
+          const regex = /^\d{10,11}$/;
+          return regex.test(phone);
+        }
+
+        $("#name").blur(function () {
+          if ($(this).val().trim() === "") {
+            $(this).addClass("error");
+            $("#nameError").show();
+          } else {
+            $(this).removeClass("error");
+            $("#nameError").hide();
+          }
+        });
+
+        $("#email").blur(function () {
+          if (!validateEmail($(this).val())) {
+            $(this).addClass("error");
+            $("#emailError").show();
+          } else {
+            $(this).removeClass("error");
+            $("#emailError").hide();
+          }
+        });
+
+        $("#phone").blur(function () {
+          if (!validatePhone($(this).val())) {
+            $(this).addClass("error");
+            $("#phoneError").show();
+          } else {
+            $(this).removeClass("error");
+            $("#phoneError").hide();
+          }
+        });
+
+        $("#validationForm").submit(function (e) {
+          e.preventDefault();
+
+          let isValid = true;
+
+          if ($("#name").val().trim() === "") {
+            $("#name").addClass("error");
+            $("#nameError").show();
+            isValid = false;
+          }
+
+          if (!validateEmail($("#email").val())) {
+            $("#email").addClass("error");
+            $("#emailError").show();
+            isValid = false;
+          }
+
+          if (!validatePhone($("#phone").val())) {
+            $("#phone").addClass("error");
+            $("#phoneError").show();
+            isValid = false;
+          }
+
+          if (isValid) {
+            $("#successMessage").fadeIn();
+            setTimeout(function () {
+              $("#successMessage").fadeOut();
+              $("#validationForm")[0].reset();
+            }, 2000);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

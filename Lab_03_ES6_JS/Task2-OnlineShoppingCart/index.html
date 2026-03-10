@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Shopping Cart</title>
+  </head>
+  <body>
+    <h1>Online Shopping Cart</h1>
+    <div id="cartResults"></div>
+
+    <script>
+      let cart = [];
+
+      function addToCart(...items) {
+        cart.push(...items);
+      }
+
+      addToCart("Laptop", "Mouse", "Keyboard", "Monitor", "Headphones");
+
+      const clonedCart = [...cart];
+
+      const [firstProduct, ...remainingProducts] = cart;
+
+      let output = `
+            <h3>Total Items: ${cart.length}</h3>
+            <p><strong>First Item:</strong> ${firstProduct}</p>
+            <p><strong>Remaining Items:</strong> ${remainingProducts.join(", ")}</p>
+            <h3>Updated Cart:</h3>
+            <ul>
+        `;
+
+      for (const item of cart) {
+        output += `<li>${item}</li>`;
+      }
+
+      output += `</ul>`;
+      output += `<h3>Cloned Cart:</h3><ul>`;
+
+      for (const item of clonedCart) {
+        output += `<li>${item}</li>`;
+      }
+
+      output += `</ul>`;
+
+      document.getElementById("cartResults").innerHTML = output;
+    </script>
+  </body>
+</html>

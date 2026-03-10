@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asynchronous Data Loader</title>
+  </head>
+  <body>
+    <h1>Asynchronous Data Loader</h1>
+    <button onclick="loadUsers()">Load Users</button>
+    <div id="result"></div>
+
+    <script>
+      const dataSuccess = true;
+
+      function fetchUsers() {
+        return new Promise((resolve, reject) => {
+          document.getElementById("result").innerHTML =
+            "<p>Loading users...</p>";
+          setTimeout(() => {
+            if (dataSuccess) {
+              const users = [
+                { id: 1, name: "Ali Ahmed", email: "ali@example.com" },
+                { id: 2, name: "Sara Khan", email: "sara@example.com" },
+                { id: 3, name: "Hassan Raza", email: "hassan@example.com" },
+              ];
+              resolve(users);
+            } else {
+              reject("Failed to load data from server");
+            }
+          }, 3000);
+        });
+      }
+
+      function loadUsers() {
+        fetchUsers()
+          .then((users) => {
+            let output = "<h3>Users Loaded Successfully:</h3><ul>";
+            for (const user of users) {
+              output += `<li><strong>${user.name}</strong> - ${user.email}</li>`;
+            }
+            output += "</ul>";
+            document.getElementById("result").innerHTML = output;
+          })
+          .catch((error) => {
+            document.getElementById("result").innerHTML =
+              `<p style="color: red;">Error: ${error}</p>`;
+          });
+      }
+    </script>
+  </body>
+</html>

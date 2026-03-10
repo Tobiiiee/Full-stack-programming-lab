@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Catalog</title>
+  </head>
+  <body>
+    <h1>Product Catalog using Map</h1>
+    <button onclick="searchProduct()">Search Product ID 3</button>
+    <button onclick="deleteProduct()">Delete Product ID 2</button>
+    <div id="catalogResults"></div>
+
+    <script>
+      const productCatalog = new Map();
+
+      productCatalog.set(1, {
+        id: 1,
+        name: "Laptop",
+        price: 1200,
+        category: "Electronics",
+      });
+      productCatalog.set(2, {
+        id: 2,
+        name: "Mouse",
+        price: 25,
+        category: "Accessories",
+      });
+      productCatalog.set(3, {
+        id: 3,
+        name: "Keyboard",
+        price: 75,
+        category: "Accessories",
+      });
+      productCatalog.set(4, {
+        id: 4,
+        name: "Monitor",
+        price: 300,
+        category: "Electronics",
+      });
+      productCatalog.set(5, {
+        id: 5,
+        name: "Headphones",
+        price: 150,
+        category: "Audio",
+      });
+
+      function displayProducts() {
+        let output = `<h3>Total Products: ${productCatalog.size}</h3>`;
+        output += "<h3>Product List:</h3>";
+
+        for (const [id, product] of productCatalog) {
+          output += `
+                    <div style="border: 1px solid #ccc; padding: 10px; margin: 5px 0;">
+                        <p><strong>ID:</strong> ${product.id}</p>
+                        <p><strong>Name:</strong> ${product.name}</p>
+                        <p><strong>Price:</strong> $${product.price}</p>
+                        <p><strong>Category:</strong> ${product.category}</p>
+                    </div>
+                `;
+        }
+
+        document.getElementById("catalogResults").innerHTML = output;
+      }
+
+      function searchProduct() {
+        const product = productCatalog.get(3);
+        if (product) {
+          alert(`Product Found: ${product.name} - $${product.price}`);
+        } else {
+          alert("Product not found");
+        }
+      }
+
+      function deleteProduct() {
+        productCatalog.delete(2);
+        displayProducts();
+      }
+
+      displayProducts();
+    </script>
+  </body>
+</html>
