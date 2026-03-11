@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact HotSpring Portable Spas - Get in touch with us.">
+  <title>Contact Us - HotSpring Portable Spas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-white">
+
+  <!-- TOP BAR -->
+  <div class="top-bar py-2 px-4 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center text-gray-600 text-xs sm:text-sm">
+      <span><i class="fas fa-phone-alt mr-1"></i> Call for Customer support: 020 38989565</span>
+      <nav class="flex gap-4 mt-1 sm:mt-0">
+        <a href="auth/login.html" class="hover:text-red-600 transition">My Account</a>
+        <span class="text-gray-300">|</span>
+        <a href="#" class="hover:text-red-600 transition">Wishlist</a>
+        <span class="text-gray-300">|</span>
+        <a href="shopping/cart.html" class="hover:text-red-600 transition">To Checkout</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- LOGO & CART BAR -->
+  <header class="bg-white py-4 px-4 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+      <a href="../index.html" class="flex items-baseline gap-1 mb-3 md:mb-0">
+        <span class="text-3xl md:text-4xl font-bold text-gray-800 tracking-tight">HotSpring</span>
+        <span class="text-lg md:text-xl text-gray-500">Portable Spas</span>
+        <sup class="text-xs text-gray-400 border border-gray-400 rounded-full w-4 h-4 flex items-center justify-center ml-1">R</sup>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="shopping/cart.html" class="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 transition px-4 py-2 rounded">
+          <i class="fas fa-shopping-cart text-gray-600"></i>
+          <div class="text-sm"><span class="font-semibold text-gray-700">My Cart:</span> <span class="text-gray-500">0 Items(s)</span></div>
+          <i class="fas fa-chevron-down text-xs text-gray-400 ml-1"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN NAVIGATION -->
+  <nav class="main-nav">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-12">
+      <div class="hidden md:flex items-center gap-0 h-full">
+        <a href="category.html" class="text-white text-sm font-semibold px-5 h-full flex items-center tracking-wide">CATEGORY</a>
+        <span class="w-px h-6 bg-red-300"></span>
+        <a href="category.html" class="text-white text-sm font-semibold px-5 h-full flex items-center tracking-wide">BRAND</a>
+        <span class="w-px h-6 bg-red-300"></span>
+        <a href="about.html" class="text-white text-sm font-semibold px-5 h-full flex items-center tracking-wide">INFO</a>
+      </div>
+      <form id="searchForm" class="hidden md:flex items-center ml-auto">
+        <input type="text" id="searchInput" placeholder="Search" class="px-4 py-2 text-sm w-64 lg:w-80 border-0 focus:ring-0">
+        <button type="submit" class="px-6 py-2 text-white text-sm font-semibold tracking-wide" style="background-color: var(--color-navy);">SEARCH</button>
+      </form>
+      <button class="hamburger md:hidden" id="hamburgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+    <a href="../index.html">Home</a><a href="category.html">Category</a><a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a><a href="auth/login.html">Login</a><a href="shopping/cart.html">Shopping Cart</a>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-4">
+    <nav class="breadcrumb py-4 text-sm text-gray-500">
+      <a href="../index.html" class="hover:text-red-600">Home</a>
+      <span class="mx-2">&gt;</span>
+      <span class="text-gray-700">Contact Us</span>
+    </nav>
+
+    <div class="bg-white shadow-sm rounded-lg border border-gray-100 mb-8">
+      <div class="p-6 md:p-10">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Contact Us</h1>
+        <div class="border-t border-gray-200 pt-6 mt-4">
+          <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Contact Form -->
+            <div class="lg:w-2/3">
+              <h2 class="text-lg font-bold text-gray-800 mb-4">Send Us a Message</h2>
+              <p class="text-sm text-gray-500 mb-2">* Required Fields</p>
+              <form id="contactForm" class="space-y-4" novalidate>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-600 mb-1">Name *</label>
+                  <input type="text" name="name" class="form-input" required>
+                  <p class="error-message"></p>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-600 mb-1">Email *</label>
+                  <input type="email" name="email" class="form-input" required>
+                  <p class="error-message"></p>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-600 mb-1">Telephone</label>
+                  <input type="tel" name="phone" class="form-input">
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-600 mb-1">Subject *</label>
+                  <input type="text" name="subject" class="form-input" required>
+                  <p class="error-message"></p>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-600 mb-1">Message *</label>
+                  <textarea name="message" rows="6" class="form-input" required></textarea>
+                  <p class="error-message"></p>
+                </div>
+                <button type="submit" class="btn-navy px-8 py-3 rounded font-semibold text-sm">SEND MESSAGE</button>
+              </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="lg:w-1/3">
+              <div class="bg-gray-50 rounded-lg p-6">
+                <h3 class="font-bold text-gray-800 mb-4">Get In Touch</h3>
+                <div class="space-y-4 text-sm">
+                  <div class="flex items-start gap-3">
+                    <i class="fas fa-map-marker-alt text-red-600 mt-1"></i>
+                    <div>
+                      <p class="font-semibold text-gray-700">Address</p>
+                      <p class="text-gray-500">Your Address: Street<br>State &amp; Zip Code<br>City &amp; Country</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <i class="fas fa-phone-alt text-red-600 mt-1"></i>
+                    <div>
+                      <p class="font-semibold text-gray-700">Phone</p>
+                      <p class="text-gray-500">888 - 201 - 8899</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <i class="fas fa-envelope text-red-600 mt-1"></i>
+                    <div>
+                      <p class="font-semibold text-gray-700">Email</p>
+                      <p class="text-gray-500">service@yoursitename.com</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <i class="fas fa-clock text-red-600 mt-1"></i>
+                    <div>
+                      <p class="font-semibold text-gray-700">Working Hours</p>
+                      <p class="text-gray-500">24/7 Customer Support</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Map Placeholder -->
+              <div class="mt-6 bg-gray-200 rounded-lg h-48 flex items-center justify-center">
+                <div class="text-center text-gray-400">
+                  <i class="fas fa-map text-4xl mb-2"></i>
+                  <p class="text-sm">Map Location</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- SPONSORS BAR -->
+  <section class="sponsors-bar bg-white py-6 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center items-center gap-8 md:gap-16">
+      <img src="../assets/images/sponsor-save4.png" alt="Save4" class="h-12 md:h-16 object-contain opacity-80 hover:opacity-100 transition">
+      <img src="../assets/images/sponsor-caldera.png" alt="Caldera Spas" class="h-12 md:h-16 object-contain opacity-80 hover:opacity-100 transition">
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer text-gray-300">
+    <div class="max-w-7xl mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4 tracking-wide">CONTACT US</h4>
+          <p class="text-sm mb-2">yoursitename.com</p>
+          <p class="text-sm mb-2">CALL 24/7: 888 - 201 - 8899</p>
+          <p class="text-sm leading-relaxed">Your Address: Street<br>State &amp; Zip Code<br>City &amp; Country</p>
+          <p class="text-sm mt-2">Email: service@yoursitename.com</p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4 tracking-wide">INFORMATION</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="about.html" class="text-gray-300 hover:text-white">About Us</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white">Customer Service</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white">Site Map</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white">Search Terms</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4 tracking-wide">MY ACCOUNT</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="auth/login.html" class="text-gray-300 hover:text-white">Sign In</a></li>
+            <li><a href="shopping/cart.html" class="text-gray-300 hover:text-white">View Cart</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white">My Wishlist</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4 tracking-wide">SIGNUP FOR A NEWSLETTER</h4>
+          <p class="text-sm mb-3">Sign up for our newsletter:</p>
+          <form id="newsletterForm" class="flex">
+            <input type="email" id="newsletterEmail" placeholder="Enter your email" class="newsletter-input flex-1 rounded-l text-sm" required>
+            <button type="submit" class="btn-red px-4 py-2 rounded-r text-sm font-semibold">GO</button>
+          </form>
+          <div class="mt-6">
+            <h5 class="text-white font-bold text-sm mb-2 tracking-wide">PAYMENT SOLUTIONS</h5>
+            <img src="../assets/images/payment-options.png" alt="Payment Options" class="h-8 object-contain opacity-80">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-gray-200 text-gray-600 text-center py-4 text-sm">&copy; 2014 Hottubspaservice.com. All Rights Reserved.</div>
+  </footer>
+
+  <button id="backToTop" class="fixed bottom-6 right-6 bg-red-600 hover:bg-red-700 text-white w-10 h-10 rounded-full shadow-lg hidden z-50 transition" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
