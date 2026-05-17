@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --orange: #F16E10;
+  --charcoal: #333333;
+  --softgray: #777777;
+  --footerbg: #555555;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; }
+
+@layer components {
+  .btn-orange {
+    @apply bg-[#F16E10] text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-[#c45608] transition-colors duration-200;
+  }
+  .btn-outline {
+    @apply border border-gray-300 text-gray-600 px-5 py-2 rounded text-sm hover:border-[#F16E10] hover:text-[#F16E10] transition-colors duration-200;
+  }
+  .section-title {
+    @apply font-serif text-2xl text-center text-charcoal tracking-wide mb-8;
+  }
+  .product-card {
+    @apply flex gap-3 items-center py-3 border-b border-gray-100 last:border-0;
+  }
+}
